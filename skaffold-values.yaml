@@ -1,0 +1,28 @@
+cockroachdb:
+  enabled: true
+  statefulset:
+    replicas: 1
+  storage:
+    persistentVolume:
+      enabled: false
+  tls:
+    enabled: false
+    certs:
+      selfSigner:
+        enabled: false
+notifo:
+  enabled: true
+  appSettings:
+    storage:
+      mongoDB:
+        connectionString: mongodb://root:root@go-notifications-mongodb.go-notifications:27017
+    messaging:
+      rabbitMq:
+        uri: amqp://root:root@go-notifications-rabbitmq.go-notifications
+app:
+  cockroachdb:
+    uri: postgresql://root@go-notifications-cockroachdb.go-notifications:26257
+  notifo:
+    baseUrl: http://go-notifications-notifo.go-notifications:5000
+    appId: yourappidhere
+    apiKey: yourapikeyhere
