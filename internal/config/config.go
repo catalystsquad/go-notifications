@@ -9,6 +9,9 @@ type RunConfig struct {
 	RunnerWindow   time.Duration
 	CleanupWindow  time.Duration
 	CockroachdbUri string
+	NotifoBaseUrl  string
+	NotifoApiKey   string
+	NotifoAppId    string
 }
 
 var AppConfig RunConfig

@@ -4,10 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"github.com/catalystsquad/app-utils-go/env"
 	"github.com/catalystsquad/app-utils-go/logging"
 	"github.com/catalystsquad/notifo-client-go"
 	notificationsv1alpha1 "github.com/catalystsquad/protos-go-notifications/gen/proto/go/notifications/v1alpha1"
+	"github.com/catalystsquad/template-go-cobra-app/internal/config"
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
 	"github.com/joomcode/errorx"
 	jsoniter "github.com/json-iterator/go"
@@ -19,9 +19,6 @@ import (
 
 var NotifoStore = NotifoNotificationStore{}
 var notifoClient = initializeNotifoClient()
-var notifoApiKey = env.GetEnvOrDefault("NOTIFO_API_KEY", "")
-var notifoBaseUrl = env.GetEnvOrDefault("NOTIFO_BASE_URL", "http://localhost:5000")
-var notifoAppId = env.GetEnvOrDefault("NOTIFO_APP_ID", "")
 var standardJSON = jsoniter.ConfigCompatibleWithStandardLibrary
 var snakeCaseJSON = jsoniter.Config{TagKey: "snake"}.Froze()
 var camelCaseJSON = jsoniter.Config{TagKey: "camel"}.Froze()
@@ -47,7 +44,7 @@ func (n NotifoNotificationStore) UpdateSubscriptions(userId string, subscription
 		Subscribe:   &subscribe,
 		Unsubscribe: &unsubscribe,
 	}
-	response, err := notifoClient.UsersPostSubscriptionsWithResponse(context.Background(), notifoAppId, userId, body)
+	response, err := notifoClient.UsersPostSubscriptionsWithResponse(context.Background(), config.AppConfig.NotifoAppId, userId, body)
 	if err != nil {
 		return err
 	}
@@ -74,7 +71,7 @@ func (n NotifoNotificationStore) ListUsers(skip, limit int32) ([]*notificationsv
 		Take: &limit,
 		Skip: &skip,
 	}
-	response, err := notifoClient.UsersGetUsersWithResponse(context.Background(), notifoAppId, params)
+	response, err := notifoClient.UsersGetUsersWithResponse(context.Background(), config.AppConfig.NotifoAppId, params)
 	if err != nil {
 		logging.Log.WithError(err).Error("error listing users")
 		return nil, err
@@ -106,7 +103,7 @@ func (n NotifoNotificationStore) UpsertUsers(users []*notificationsv1alpha1.Noti
 		requestUsers = append(requestUsers, dto)
 	}
 	request := notifo_client_go.UsersPostUsersJSONRequestBody{Requests: requestUsers}
-	response, err := notifoClient.UsersPostUsersWithResponse(context.Background(), notifoAppId, request)
+	response, err := notifoClient.UsersPostUsersWithResponse(context.Background(), config.AppConfig.NotifoAppId, request)
 	if err != nil {
 		return nil, err
 	}
@@ -158,11 +155,11 @@ func (n NotifoNotificationStore) DeleteUsers(ids []string) error {
 }
 
 func initializeNotifoClient() *notifo_client_go.ClientWithResponses {
-	apiKeyProvider, err := securityprovider.NewSecurityProviderApiKey("header", "X-ApiKey", notifoApiKey)
+	apiKeyProvider, err := securityprovider.NewSecurityProviderApiKey("header", "X-ApiKey", config.AppConfig.NotifoApiKey)
 	if err != nil {
 		panic(err)
 	}
-	notifoClient, err := notifo_client_go.NewClientWithResponses(notifoBaseUrl, notifo_client_go.WithRequestEditorFn(apiKeyProvider.Intercept))
+	notifoClient, err := notifo_client_go.NewClientWithResponses(config.AppConfig.NotifoBaseUrl, notifo_client_go.WithRequestEditorFn(apiKeyProvider.Intercept))
 	if err != nil {
 		panic(err)
 	}
@@ -178,7 +175,7 @@ func getUser(id string, withDetails bool) (*notificationsv1alpha1.NotificationUs
 	params := &notifo_client_go.UsersGetUserParams{
 		WithDetails: &withDetails,
 	}
-	response, err := notifoClient.UsersGetUserWithResponse(context.Background(), notifoAppId, id, params)
+	response, err := notifoClient.UsersGetUserWithResponse(context.Background(), config.AppConfig.NotifoAppId, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +192,7 @@ func getUser(id string, withDetails bool) (*notificationsv1alpha1.NotificationUs
 }
 
 func deleteUser(id string) error {
-	response, err := notifoClient.UsersDeleteUser(context.Background(), notifoAppId, id)
+	response, err := notifoClient.UsersDeleteUser(context.Background(), config.AppConfig.NotifoAppId, id)
 	if err != nil {
 		return err
 	}
@@ -214,7 +211,7 @@ func getNotifications(channels []string, userId, query string, take, skip int32)
 	if query != "" {
 		params.Query = &query
 	}
-	response, err := notifoClient.NotificationsGetNotificationsWithResponse(context.Background(), notifoAppId, userId, params)
+	response, err := notifoClient.NotificationsGetNotificationsWithResponse(context.Background(), config.AppConfig.NotifoAppId, userId, params)
 	if err != nil {
 		return nil, 0, err
 	}
@@ -251,7 +248,7 @@ func publishEvents(events []*notificationsv1alpha1.NotificationEvent) error {
 	params := notifo_client_go.EventsPostEventsJSONRequestBody{
 		Requests: publishes,
 	}
-	response, err := notifoClient.EventsPostEventsWithResponse(context.Background(), notifoAppId, params)
+	response, err := notifoClient.EventsPostEventsWithResponse(context.Background(), config.AppConfig.NotifoAppId, params)
 	if err != nil {
 		return err
 	}

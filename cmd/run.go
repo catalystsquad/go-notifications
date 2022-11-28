@@ -54,6 +54,9 @@ func NewRunCommand() *cobra.Command {
 	runCmd.Flags().DurationVar(&config.AppConfig.RunnerWindow, "runner-window", 1*time.Second, "the time window to run notifications for. If this is set to 30 seconds for example, it will deliver notifications set to be delivered in the next 30 seconds, every 30 seconds.")
 	runCmd.Flags().DurationVar(&config.AppConfig.CleanupWindow, "cleanup-window", 1*time.Second, "the time window to cleanup for. If this is set to 30 seconds for example, it will clean up delivered notifications every 30 seconds.")
 	runCmd.Flags().StringVar(&config.AppConfig.CockroachdbUri, "cockroachdb-uri", "", "the cockroachdb connection string")
+	runCmd.Flags().StringVar(&config.AppConfig.NotifoApiKey, "notifo-api-key", "", "the notifo api key")
+	runCmd.Flags().StringVar(&config.AppConfig.NotifoBaseUrl, "notifo-base-url", "http://localhost:5000", "the notifo base url")
+	runCmd.Flags().StringVar(&config.AppConfig.NotifoAppId, "notifo-app-id", "", "the notifo app id")
 	rootCmd.AddCommand(runCmd)
 
 	return runCmd
