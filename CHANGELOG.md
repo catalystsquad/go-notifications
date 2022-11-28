@@ -1,3 +1,10 @@
+# 1.0.0 (2022-11-28)
+
+
+### Bug Fixes
+
+* Initial release ([#1](https://github.com/catalystsquad/go-notifications/issues/1)) ([d4b035f](https://github.com/catalystsquad/go-notifications/commit/d4b035f78b49d48740e1fd6648bee64f7614b6ff))
+
 # 1.0.0 (2022-06-07)
 
 
