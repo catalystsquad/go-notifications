@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/catalystsquad/go-notifications/compare/v1.0.2...v1.0.3) (2022-11-29)
+
+
+### Bug Fixes
+
+* Tag without v ([#4](https://github.com/catalystsquad/go-notifications/issues/4)) ([753d7bd](https://github.com/catalystsquad/go-notifications/commit/753d7bd5f74da378ee24d57cc8593182191cfee6))
+
 ## [1.0.2](https://github.com/catalystsquad/go-notifications/compare/v1.0.1...v1.0.2) (2022-11-29)
 
 
