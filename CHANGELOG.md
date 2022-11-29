@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/catalystsquad/go-notifications/compare/v1.0.0...v1.0.1) (2022-11-29)
+
+
+### Bug Fixes
+
+* Fix image build ([#2](https://github.com/catalystsquad/go-notifications/issues/2)) ([a871e37](https://github.com/catalystsquad/go-notifications/commit/a871e3702a9b9ce4d22aa96a5d0d72d84b86327a))
+
 # 1.0.0 (2022-11-28)
 
 
