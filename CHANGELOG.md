@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/catalystsquad/go-notifications/compare/v1.0.1...v1.0.2) (2022-11-29)
+
+
+### Bug Fixes
+
+* Fix image push ([#3](https://github.com/catalystsquad/go-notifications/issues/3)) ([898f7b4](https://github.com/catalystsquad/go-notifications/commit/898f7b4fb448400e4551fd43e642bbca8eab1e35))
+
 ## [1.0.1](https://github.com/catalystsquad/go-notifications/compare/v1.0.0...v1.0.1) (2022-11-29)
 
 
