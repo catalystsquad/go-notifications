@@ -7,6 +7,7 @@ jobs:
   build-push-image:
     runs-on: ubuntu-latest
     steps:
+      - uses: crazy-max/ghaction-dump-context@v1
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -24,6 +25,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: latest,${{ github.event.release.tag_name }}
+          tags: quay.io/catalystsquad/${{ github.event.repository.name }}:latest,quay.io/catalystsquad/${{ github.event.repository.name }}:${{ github.event.release.tag_name }}
           secrets: |
             "GIT_PAT=${{ secrets.AUTOMATION_PAT }}"
