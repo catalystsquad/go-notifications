@@ -1,8 +1,8 @@
 name: build and push image to quay
 
 on:
-  release:
-    types: [created]
+  branches:
+    - tags
 jobs:
   build-push-image:
     runs-on: ubuntu-latest
@@ -24,7 +24,7 @@ jobs:
         id: get-tags
         shell: bash
         env:
-          TAG_VERSIONS: latest,${{ github.event.release.tag_name }}
+          TAG_VERSIONS: latest,v1.0.2
         run: |
           fullTags=""
           for version in ${TAG_VERSIONS//,/ }; do
@@ -45,5 +45,3 @@ jobs:
         with:
           push: true
           tags: ${{ steps.get-tags.outputs.tags }}
-          secrets: |
-            "GIT_PAT=${{ secrets.AUTOMATION_PAT }}"
