@@ -25,6 +25,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: catalystsquad/go-notifications:latest
+          tags: quay.io/catalystsquad/go-notifications:latest
           secrets: |
             "GIT_PAT=${{ secrets.AUTOMATION_PAT }}"
