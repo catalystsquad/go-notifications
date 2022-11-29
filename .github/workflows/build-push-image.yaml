@@ -45,5 +45,3 @@ jobs:
         with:
           push: true
           tags: ${{ steps.get-tags.outputs.tags }}
-          secrets: |
-            "GIT_PAT=${{ secrets.AUTOMATION_PAT }}"
