@@ -26,5 +26,5 @@ jobs:
         with:
           push: false
           tags: latest
-          build-secrets: |
+          secrets: |
             "GIT_PAT=${{ secrets.AUTOMATION_PAT }}"
