@@ -20,11 +20,28 @@ jobs:
           registry: quay.io
           username: ${{ secrets.QUAY_DOCKER_REGISTRY_USER }}
           password: ${{ secrets.QUAY_DOCKER_REGISTRY_PASSWORD }}
-
+      - name: Get tags
+        id: get-tags
+        shell: bash
+        env:
+          TAG_VERSIONS: latest,${{ github.event.release.tag_name }}
+        run: |
+          fullTags=""
+          for version in ${TAG_VERSIONS//,/ }; do
+            # trim "v" from tag if it exists
+            if [[ $version =~ ^v[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+ ]]; then
+                trimmedVersion="${version:1}"
+                echo "modified $version to $trimmedVersion"
+                version=$trimmedVersion
+            fi
+            # build list of tags with quay registry, use ${blah,,} to ensure lower case
+            fullTags="quay.io/catalystsquad/${{ github.event.repository.name }}:$version,$fullTags"
+          done
+          fullTags=${fullTags::-1}
+          echo "will push with tags: $fullTags"
+          echo "::set-output name=tags::$fullTags"
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: quay.io/catalystsquad/${{ github.event.repository.name }}:latest,quay.io/catalystsquad/${{ github.event.repository.name }}:${{ github.event.release.tag_name }}
-          secrets: |
-            "GIT_PAT=${{ secrets.AUTOMATION_PAT }}"
+          tags: ${{ steps.get-tags.outputs.tags }}
