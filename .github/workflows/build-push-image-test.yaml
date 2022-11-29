@@ -1,8 +1,9 @@
 name: build and push image to quay
 
 on:
-  branches:
-    - tags
+  push:
+    branches:
+      - tags
 jobs:
   build-push-image:
     runs-on: ubuntu-latest
