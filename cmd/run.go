@@ -65,6 +65,13 @@ func NewRunCommand() *cobra.Command {
 func runServer() {
 	// instantiate store
 	notification_store.NotificationStore = notifo_store.NotifoNotificationStore{}
+	notificationStoreDeferredFunc, err := notification_store.NotificationStore.Initialize()
+	if err != nil {
+		logging.Log.WithError(err).Fatal("error initializing notification store")
+	}
+	if notificationStoreDeferredFunc != nil {
+		defer notificationStoreDeferredFunc()
+	}
 	go startScheduler()
 	server, err := pkg.NewGrpcServer(ServerConfig)
 	if err != nil {

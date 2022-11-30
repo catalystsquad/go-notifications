@@ -9,8 +9,8 @@ deploy:
       - name: go-notifications
         namespace: go-notifications
         createNamespace: true
-#        chartPath: ../chart-go-notifications/chart
-        remoteChart: catalyst/go-notifications
+        chartPath: ../chart-go-notifications/chart
+#        remoteChart: catalyst/go-notifications
         version: '>=1.0.0-alpha'
         artifactOverrides:
           image: go-notifications

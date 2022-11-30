@@ -11,6 +11,7 @@ import (
 	"github.com/deepmap/oapi-codegen/pkg/securityprovider"
 	"github.com/joomcode/errorx"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/sirupsen/logrus"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/protobuf/encoding/protojson"
 	"io"
@@ -18,7 +19,7 @@ import (
 )
 
 var NotifoStore = NotifoNotificationStore{}
-var notifoClient = initializeNotifoClient()
+var notifoClient *notifo_client_go.ClientWithResponses
 var standardJSON = jsoniter.ConfigCompatibleWithStandardLibrary
 var snakeCaseJSON = jsoniter.Config{TagKey: "snake"}.Froze()
 var camelCaseJSON = jsoniter.Config{TagKey: "camel"}.Froze()
@@ -55,6 +56,7 @@ func (n NotifoNotificationStore) UpdateSubscriptions(userId string, subscription
 }
 
 func (n NotifoNotificationStore) Initialize() (deferredFunc func(), err error) {
+	notifoClient = initializeNotifoClient()
 	return
 }
 
@@ -155,6 +157,7 @@ func (n NotifoNotificationStore) DeleteUsers(ids []string) error {
 }
 
 func initializeNotifoClient() *notifo_client_go.ClientWithResponses {
+	logging.Log.WithFields(logrus.Fields{"base_url": config.AppConfig.NotifoBaseUrl}).Info("initializing notifo client")
 	apiKeyProvider, err := securityprovider.NewSecurityProviderApiKey("header", "X-ApiKey", config.AppConfig.NotifoApiKey)
 	if err != nil {
 		panic(err)
