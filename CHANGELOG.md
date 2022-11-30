@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/catalystsquad/go-notifications/compare/v1.0.3...v1.0.4) (2022-11-30)
+
+
+### Bug Fixes
+
+* Fix client initialization. Global init doesn't work because we rely on cobra to read in env vars, so init has to happen after that or we don't get the env vars ([#5](https://github.com/catalystsquad/go-notifications/issues/5)) ([4d4ff80](https://github.com/catalystsquad/go-notifications/commit/4d4ff80470e8bfa912983d1313e3ab597defc3c3))
+
 ## [1.0.3](https://github.com/catalystsquad/go-notifications/compare/v1.0.2...v1.0.3) (2022-11-29)
 
 
