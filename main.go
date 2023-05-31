@@ -1,10 +1,9 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
-
+Copyright © 2023 Catalyst Squad, Inc <info@catalystsquad.com>
 */
 package main
 
-import "github.com/catalystsquad/template-go-cobra-app/cmd"
+import "github.com/catalystsquad/go-notifications/cmd"
 
 func main() {
 	cmd.Execute()
