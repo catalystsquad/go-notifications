@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/catalystsquad/go-notifications/compare/v1.0.4...v1.1.0) (2023-05-31)
+
+
+### Features
+
+* upgrade go-scheduler, implement db conn pooling config ([#8](https://github.com/catalystsquad/go-notifications/issues/8)) ([eed4033](https://github.com/catalystsquad/go-notifications/commit/eed4033fa79716658f8d1eda86dbcdd649ce7497))
+
 ## [1.0.4](https://github.com/catalystsquad/go-notifications/compare/v1.0.3...v1.0.4) (2022-11-30)
 
 
