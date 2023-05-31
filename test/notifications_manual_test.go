@@ -3,17 +3,18 @@ package test
 import (
 	"context"
 	"encoding/json"
+	"testing"
+	"time"
+
 	"github.com/brianvoe/gofakeit/v6"
+	"github.com/catalystsquad/go-notifications/internal"
 	notificationsv1alpha1 "github.com/catalystsquad/protos-go-notifications/gen/proto/go/notifications/v1alpha1"
-	"github.com/catalystsquad/template-go-cobra-app/internal"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/types/known/structpb"
-	"testing"
-	"time"
 )
 
 var NotificationsClient notificationsv1alpha1.NotificationsServiceClient

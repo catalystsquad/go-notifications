@@ -1,4 +1,4 @@
-module github.com/catalystsquad/template-go-cobra-app
+module github.com/catalystsquad/go-notifications
 
 go 1.20
 

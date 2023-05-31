@@ -3,11 +3,12 @@ package internal
 import (
 	"context"
 	"fmt"
+
 	"github.com/catalystsquad/app-utils-go/logging"
+	"github.com/catalystsquad/go-notifications/internal/errors"
+	"github.com/catalystsquad/go-notifications/notification_store"
 	"github.com/catalystsquad/go-scheduler/pkg"
 	notificationsv1alpha1 "github.com/catalystsquad/protos-go-notifications/gen/proto/go/notifications/v1alpha1"
-	"github.com/catalystsquad/template-go-cobra-app/internal/errors"
-	"github.com/catalystsquad/template-go-cobra-app/notification_store"
 	"github.com/joomcode/errorx"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
