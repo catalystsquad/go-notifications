@@ -3,6 +3,10 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/catalystsquad/app-utils-go/logging"
 	pkg2 "github.com/catalystsquad/go-scheduler/pkg"
 	"github.com/catalystsquad/go-scheduler/pkg/cockroachdb_store"
@@ -17,9 +21,6 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"net/http"
-	"os"
-	"time"
 )
 
 var ServerConfig pkg.GrpcServerConfig
@@ -54,6 +55,9 @@ func NewRunCommand() *cobra.Command {
 	runCmd.Flags().DurationVar(&config.AppConfig.RunnerWindow, "runner-window", 1*time.Second, "the time window to run notifications for. If this is set to 30 seconds for example, it will deliver notifications set to be delivered in the next 30 seconds, every 30 seconds.")
 	runCmd.Flags().DurationVar(&config.AppConfig.CleanupWindow, "cleanup-window", 1*time.Second, "the time window to cleanup for. If this is set to 30 seconds for example, it will clean up delivered notifications every 30 seconds.")
 	runCmd.Flags().StringVar(&config.AppConfig.CockroachdbUri, "cockroachdb-uri", "", "the cockroachdb connection string")
+	runCmd.Flags().IntVar(&config.AppConfig.CockroachdbMaxIdleConnections, "cockroachdb-max-idle-connections", 5, "max idle connections for cockroachdb")
+	runCmd.Flags().IntVar(&config.AppConfig.CockroachdbMaxOpenConnections, "cockroachdb-max-open-connections", 10, "max open connections for cockroachdb")
+	runCmd.Flags().DurationVar(&config.AppConfig.CockroachdbConnMaxLifetime, "cockroachdb-connection-max-lifetime", time.Hour, "max connection lifetime for cockroachdb")
 	runCmd.Flags().StringVar(&config.AppConfig.NotifoApiKey, "notifo-api-key", "", "the notifo api key")
 	runCmd.Flags().StringVar(&config.AppConfig.NotifoBaseUrl, "notifo-base-url", "http://localhost:5000", "the notifo base url")
 	runCmd.Flags().StringVar(&config.AppConfig.NotifoAppId, "notifo-app-id", "", "the notifo app id")
@@ -92,9 +96,20 @@ func runServer() {
 }
 
 func startScheduler() error {
-	cockroachdbStore := cockroachdb_store.NewCockroachdbStore(config.AppConfig.CockroachdbUri, nil)
+	cockroachdbStore := cockroachdb_store.NewCockroachdbStore(config.AppConfig.CockroachdbUri, nil,
+		cockroachdb_store.WithConnectionSettings(
+			config.AppConfig.CockroachdbMaxIdleConnections,
+			config.AppConfig.CockroachdbMaxOpenConnections,
+			config.AppConfig.CockroachdbConnMaxLifetime,
+		))
 	var err error
-	internal.Scheduler, err = pkg2.NewScheduler(config.AppConfig.ScheduleWindow, config.AppConfig.RunnerWindow, config.AppConfig.CleanupWindow, internal.HandleScheduledNotification, cockroachdbStore)
+	internal.Scheduler, err = pkg2.NewScheduler(
+		config.AppConfig.ScheduleWindow,
+		config.AppConfig.RunnerWindow,
+		config.AppConfig.CleanupWindow,
+		internal.HandleScheduledNotification,
+		cockroachdbStore,
+	)
 	if err != nil {
 		return err
 	}
