@@ -8,7 +8,7 @@ require (
 	github.com/catalystsquad/go-scheduler v1.1.0
 	github.com/catalystsquad/grpc-base-go v1.0.5
 	github.com/catalystsquad/notifo-client-go v0.0.0-20230606212355-17ea96dc6a0e
-	github.com/catalystsquad/protos-go-notifications v0.0.0-20230606214731-def9dc6cae15
+	github.com/catalystsquad/protos-go-notifications v1.0.0
 	github.com/deepmap/oapi-codegen v1.13.0
 	github.com/google/uuid v1.3.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2

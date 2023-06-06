@@ -66,8 +66,8 @@ github.com/catalystsquad/grpc-base-go v1.0.5 h1:Cj2LKPpgaBq00k4QCdDtl4uXoYIN6nin
 github.com/catalystsquad/grpc-base-go v1.0.5/go.mod h1:RUH83ubTYmsx7YdO0Yb4IBS6okSV3jUfiU2RsaSwLXc=
 github.com/catalystsquad/notifo-client-go v0.0.0-20230606212355-17ea96dc6a0e h1:S8NuJ7srkUApXhwIXik5WT2iyNzQqS4iEbZ6WabBlQg=
 github.com/catalystsquad/notifo-client-go v0.0.0-20230606212355-17ea96dc6a0e/go.mod h1:JOSzq+NRH5Nm9xWNRPma+wpXQaBzbSdC5DjQaWRzdn8=
-github.com/catalystsquad/protos-go-notifications v0.0.0-20230606214731-def9dc6cae15 h1:PstpAow4imPtgAYrz3TIyPHbhobRt1jr3SaJ00UBlIk=
-github.com/catalystsquad/protos-go-notifications v0.0.0-20230606214731-def9dc6cae15/go.mod h1:PKB416iqqM+eVkfdzNHmPTFk2KTRZDCGsLj8teX93JI=
+github.com/catalystsquad/protos-go-notifications v1.0.0 h1:biGMf4oW7mavnzKIMZTRczp3xiGfo3rM8GpMMY6DisE=
+github.com/catalystsquad/protos-go-notifications v1.0.0/go.mod h1:PKB416iqqM+eVkfdzNHmPTFk2KTRZDCGsLj8teX93JI=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/cespare/xxhash/v2 v2.1.1/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/cespare/xxhash/v2 v2.2.0 h1:DC2CZ1Ep5Y4k3ZQ899DldepgrayRUGE6BBZ/cd9Cj44=
