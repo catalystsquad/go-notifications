@@ -12,7 +12,7 @@ type NotificationStoreInterface interface {
 	GetUsers(ids []string) ([]*notificationsv1alpha1.NotificationUser, error)
 	ListUsers(skip, limit int32) ([]*notificationsv1alpha1.NotificationUser, error)
 	DeleteUsers(ids []string) error
-	GetNotifications(channels []string, userId, query string, limit, skip int32) ([]*notificationsv1alpha1.Notification, int32, error)
+	GetNotifications(channels []string, userId, query string, limit, skip int32, correlationId *string) ([]*notificationsv1alpha1.Notification, int32, error)
 	PublishEvents(events []*notificationsv1alpha1.NotificationEvent) error
 	UpdateSubscriptions(userId string, subscriptions []*notificationsv1alpha1.SubscriptionSettings, unsubscribe []string) error
 }

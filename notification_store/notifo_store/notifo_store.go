@@ -60,8 +60,8 @@ func (n NotifoNotificationStore) Initialize() (deferredFunc func(), err error) {
 	return
 }
 
-func (n NotifoNotificationStore) GetNotifications(channels []string, userId, query string, limit, skip int32) ([]*notificationsv1alpha1.Notification, int32, error) {
-	return getNotifications(channels, userId, query, limit, skip)
+func (n NotifoNotificationStore) GetNotifications(channels []string, userId, query string, limit, skip int32, correlationId *string) ([]*notificationsv1alpha1.Notification, int32, error) {
+	return getNotifications(channels, userId, query, limit, skip, correlationId)
 }
 
 func (n NotifoNotificationStore) PublishEvents(events []*notificationsv1alpha1.NotificationEvent) error {
@@ -205,14 +205,19 @@ func deleteUser(id string) error {
 	return nil
 }
 
-func getNotifications(channels []string, userId, query string, take, skip int32) ([]*notificationsv1alpha1.Notification, int32, error) {
+func getNotifications(channels []string, userId, query string, take, skip int32, correlationId *string) ([]*notificationsv1alpha1.Notification, int32, error) {
 	params := &notifo_client_go.NotificationsGetNotificationsParams{
-		Channels: &channels,
 		Take:     &take,
 		Skip:     &skip,
 	}
+	if channels != nil {
+		params.Channels = &channels
+	}
 	if query != "" {
 		params.Query = &query
+	}
+	if correlationId != nil {
+		params.CorrelationId = correlationId
 	}
 	response, err := notifoClient.NotificationsGetNotificationsWithResponse(context.Background(), config.AppConfig.NotifoAppId, userId, params)
 	if err != nil {
