@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/catalystsquad/go-notifications/compare/v1.1.0...v1.1.1) (2023-06-06)
+
+
+### Bug Fixes
+
+* add correlationId to notification events ([#10](https://github.com/catalystsquad/go-notifications/issues/10)) ([2d165e3](https://github.com/catalystsquad/go-notifications/commit/2d165e3d3a119bf7135f69ca39eb568c1eaa6054))
+
 # [1.1.0](https://github.com/catalystsquad/go-notifications/compare/v1.0.4...v1.1.0) (2023-05-31)
 
 
