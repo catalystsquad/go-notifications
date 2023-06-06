@@ -43,6 +43,9 @@ func (n NotificationsServiceServer) GetScheduledNotifications(ctx context.Contex
 			return nil, err
 		}
 		taskDefinitions, err = Scheduler.GetTaskDefinitions(uuids)
+		if err != nil {
+			return nil, err
+		}
 	} else if request.UserId != "" {
 		// query by user id
 		query := fmt.Sprintf("metadata->>'user_id' = '%s'", request.UserId)
@@ -126,7 +129,7 @@ func (n NotificationsServiceServer) DeleteUsers(ctx context.Context, request *no
 }
 
 func (n NotificationsServiceServer) GetNotifications(ctx context.Context, request *notificationsv1alpha1.NotificationsServiceGetNotificationsRequest) (*notificationsv1alpha1.NotificationsServiceGetNotificationsResponse, error) {
-	notifications, total, err := notification_store.NotificationStore.GetNotifications(request.Channels, request.UserId, request.Query, request.Limit, request.Skip)
+	notifications, total, err := notification_store.NotificationStore.GetNotifications(request.Channels, request.UserId, request.Query, request.Limit, request.Skip, request.CorrelationId)
 	if err != nil {
 		logging.Log.WithError(err).Error("error getting notifications")
 		return nil, status.Error(codes.Internal, errors.UnexpectedError)

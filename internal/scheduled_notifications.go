@@ -24,6 +24,12 @@ func HandleScheduledNotification(task pkg.TaskInstance) error {
 		return err
 	}
 	event.Notification.Topic = GetUserTopic(event.UserId)
+	// set correlation id to the task definition id, so that the notification
+	// event can be tracked back to the task
+	taskID := task.TaskDefinition.Id.String()
+	if taskID != "" {
+		event.Notification.CorrelationId = &taskID
+	}
 	err = notification_store.NotificationStore.PublishEvents([]*notificationsv1alpha1.NotificationEvent{event.Notification})
 	if err != nil {
 		logging.Log.WithError(err).Error("error sending scheduled notification")
